@@ -3,17 +3,22 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import subprocess
 import sys
 from pathlib import Path
 
 from co_copilot.config import load_config
 from co_copilot.evaluation import evaluate, to_markdown
+from co_copilot.logging_config import configure_logging
 from co_copilot.pipeline import load_project_metadata, run_pipeline
+
+LOGGER = logging.getLogger(__name__)
 
 
 def main() -> int:
     """Run the offline pipeline, report evaluation, and optionally launch UI."""
+    configure_logging()
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--launch", action="store_true", help="Launch Streamlit after checks."
@@ -32,7 +37,7 @@ def main() -> int:
     report = evaluate(
         result.extractions, root / "data" / "gold_standard.json", args.split
     )
-    print(to_markdown(report))
+    LOGGER.info("\n%s", to_markdown(report))
     if args.launch:
         return subprocess.call(
             [sys.executable, "-m", "streamlit", "run", str(root / "app" / "Home.py")]

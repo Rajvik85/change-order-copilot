@@ -4,6 +4,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-0072B2)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-009E73)](LICENSE)
 [![Extraction F1](https://img.shields.io/badge/held--out_F1-1.000-D89414)](docs/NLP_LLM_METHODOLOGY.md)
+[![Live app](https://img.shields.io/badge/live-Streamlit-FF4B4B)](https://change-order-copilot.streamlit.app/)
 
 **Turn a pile of change orders into a defensible commercial position.**
 
@@ -12,6 +13,8 @@ structured change-order extraction, contractual compliance checks, and
 portfolio exposure analytics. Its deterministic core works without an API key.
 An optional, clearly separated LLM layer can draft grounded summaries and
 review memos, but it never changes a compliance verdict.
+
+**[Open the public Streamlit demo](https://change-order-copilot.streamlit.app/)**
 
 ![Change Order Copilot home](docs/screenshots/home.png)
 
@@ -44,11 +47,28 @@ commercial intelligence.
 | Screen | Review purpose | Screenshot status |
 |---|---|---|
 | Home | Load the complete offline demo | Captured above |
-| Document Intake | Upload, paste, map, and validate inputs | Capture for v1.0.0 |
+| Document Intake | Upload, paste, map, and validate inputs | Captured below |
 | Portfolio Dashboard | See exposure, compliance, and concentrations | Captured above |
-| CO Analysis | Trace facts to source spans and inspect exact date math | Capture for v1.0.0 |
-| Compliance Checker | Review the CO × check matrix and time-bar radar | Capture for v1.0.0 |
-| AI Review Memo | Compare the designed no-key state and grounded example | Capture both states for v1.0.0 |
+| CO Analysis | Trace facts to source spans and inspect exact date math | Captured below |
+| Compliance Checker | Review the CO × check matrix and time-bar radar | Captured below |
+| AI Review Memo | Compare the designed no-key state and grounded example | Captured below |
+| Reports & Export | Preview the self-contained review pack | Captured in `docs/screenshots/` |
+
+### Intake and mapping
+
+![Hardened document intake](docs/screenshots/document-intake.png)
+
+### Source-span analysis
+
+![Cost source span highlighted beside extracted facts and compliance](docs/screenshots/co-analysis.png)
+
+### Compliance matrix and radar
+
+![Portfolio compliance checker](docs/screenshots/compliance-checker.png)
+
+### Designed no-key memo with development example
+
+![AI review memo no-key state and example](docs/screenshots/ai-review-memo-no-key.png)
 
 **Demo GIF placeholder:** record about 20 seconds at 1440×900: open Home, click
 **Load demo project**, open **Portfolio Dashboard**, select a time-barred CO in

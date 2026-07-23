@@ -21,6 +21,7 @@ from co_copilot.storage import (
     atomic_write,
     load_snapshot,
     persist_snapshot,
+    restore_pipeline_result,
     session_artifact_dir,
 )
 
@@ -45,6 +46,15 @@ def test_atomic_snapshot_roundtrip(tmp_path: Path, demo_result) -> None:
     assert path.exists()
     restored = load_snapshot(tmp_path)
     assert restored["manifest"]["document_count"] == 18
+    interactive = restore_pipeline_result(
+        tmp_path,
+        load_project_metadata(
+            Path(__file__).resolve().parents[1] / "data/project_meta.yaml"
+        ),
+    )
+    assert interactive is not None
+    assert len(interactive.documents) == 18
+    assert interactive.extractions[0].value("event_date").isoformat() == "2026-02-03"
 
 
 def test_session_directory_is_isolated() -> None:

@@ -10,7 +10,12 @@ import streamlit as st
 
 from co_copilot import __version__
 from co_copilot.models import PipelineResult
-from co_copilot.storage import artifact_zip, load_snapshot, session_artifact_dir
+from co_copilot.storage import (
+    artifact_zip,
+    load_snapshot,
+    restore_pipeline_result,
+    session_artifact_dir,
+)
 
 STATUS_ICONS = {
     "PASS": "● Pass",
@@ -78,16 +83,18 @@ def export_escape_hatch(result: PipelineResult, key: str) -> None:
     )
 
 
-def recovery_panel(folder: Path) -> dict[str, Any] | None:
+def recovery_panel(folder: Path, metadata: dict[str, Any]) -> dict[str, Any] | None:
     """Offer the owning session's last safe snapshot after a rerun or crash."""
     snapshot = load_snapshot(folder)
     if snapshot and "pipeline_result" not in st.session_state:
         count = snapshot.get("manifest", {}).get("document_count", 0)
         with st.expander(f"↻ Restore last session summary ({count} documents)"):
-            st.caption(
-                "The safe JSON snapshot can be reviewed or downloaded. Reloading the "
-                "bundled demo reconstructs all interactive views."
-            )
+            st.caption("The safe JSON snapshot can restore all interactive views.")
+            if st.button("Restore interactive results", key="restore_snapshot"):
+                restored = restore_pipeline_result(folder, metadata)
+                if restored is not None:
+                    st.session_state["pipeline_result"] = restored
+                    st.rerun()
             st.download_button(
                 "Download recovery snapshot",
                 data=str.encode(__import__("json").dumps(snapshot, indent=2)),

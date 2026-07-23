@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import time
 from collections.abc import Callable
 from dataclasses import asdict
@@ -23,6 +24,7 @@ from co_copilot.models import PipelineResult
 
 ProgressCallback = Callable[[int, int, str, str], None]
 CancelCallback = Callable[[], bool]
+LOGGER = logging.getLogger(__name__)
 
 
 def hash_inputs(paths: list[Path]) -> str:
@@ -61,6 +63,7 @@ def run_pipeline(
     extractions = []
     compliance = []
     clauses = load_clause_library(clause_directory)
+    LOGGER.info("Pipeline started for %d documents", len(selected))
     total = len(selected)
     provisional = False
     for index, path in enumerate(selected, start=1):
@@ -80,9 +83,11 @@ def run_pipeline(
             extraction = extract(
                 document,
                 low_confidence=float(config["extraction"]["low_confidence_threshold"]),
+                spacy_model=str(config["extraction"]["spacy_model"]),
             )
             assessment = assess_compliance(extraction, metadata, clauses)
         except Exception as exc:
+            LOGGER.error("Pipeline rejected %s: %s", path.name, exc)
             if progress:
                 progress(index, total, path.name, f"rejected: {exc}")
             messages.append(f"{path.name}: {exc}")
@@ -93,6 +98,12 @@ def run_pipeline(
         if progress:
             progress(index, total, path.name, "complete")
     analytics = portfolio_analytics(tuple(extractions), tuple(compliance), metadata)
+    LOGGER.info(
+        "Pipeline completed: %d/%d documents, provisional=%s",
+        len(documents),
+        total,
+        provisional,
+    )
     return PipelineResult(
         documents=tuple(documents),
         extractions=tuple(extractions),

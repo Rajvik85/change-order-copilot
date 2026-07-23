@@ -14,6 +14,7 @@ if str(SRC) not in sys.path:
 if str(Path(__file__).parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).parent))
 
+from co_copilot import __version__
 from co_copilot.config import config_hash, load_config
 from co_copilot.pipeline import hash_inputs, load_project_metadata, run_pipeline
 from co_copilot.storage import persist_snapshot
@@ -105,7 +106,10 @@ with context:
         "typically completes in a few seconds"
     )
 
-recovery_panel(artifact_folder)
+recovery_panel(
+    artifact_folder,
+    load_project_metadata(ROOT / "data" / "project_meta.yaml"),
+)
 
 if load_clicked:
     paths = list((ROOT / "data" / "change_orders").glob("*"))
@@ -117,10 +121,13 @@ if load_clicked:
             str(ROOT),
         )
     st.session_state["pipeline_result"] = result
-    persist_snapshot(artifact_folder, result, "0.1.0")
+    persist_snapshot(artifact_folder, result, __version__)
+    st.session_state["demo_load_notice"] = len(result.documents)
+    st.rerun()
+
+if count := st.session_state.pop("demo_load_notice", 0):
     st.success(
-        f"● {len(result.documents)} documents analyzed. "
-        "Open Portfolio Dashboard from the sidebar."
+        f"● {count} documents analyzed. " "Open Portfolio Dashboard from the sidebar."
     )
 
 result = st.session_state.get("pipeline_result")

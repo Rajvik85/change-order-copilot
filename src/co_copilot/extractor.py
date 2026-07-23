@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import re
 from collections.abc import Iterable
+from functools import lru_cache
 from typing import Any
 
 from co_copilot.models import Document, ExtractedField, ExtractionResult, TextSpan
@@ -68,6 +69,21 @@ _TYPE_CLAUSE_HINTS = {
     "18.2": "force majeure",
 }
 
+_EVENT_PHRASES = (
+    "scope addition",
+    "design change",
+    "differing physical conditions",
+    "instructed acceleration",
+    "extension of time",
+    "prolongation",
+    "force majeure",
+    "exceptional external event",
+    "omission and descope",
+    "backcharge",
+    "critical path",
+    "concurrent delay",
+)
+
 
 def _sentence_span(text: str, start: int, end: int) -> TextSpan:
     left_candidates = [text.rfind(token, 0, start) for token in ("\n", ". ")]
@@ -90,6 +106,50 @@ def _field_from_match(
 
 def _search_label(text: str, field_name: str) -> re.Match[str] | None:
     return re.search(_LABEL_PATTERNS[field_name], text)
+
+
+@lru_cache(maxsize=2)
+def _load_spacy(model_name: str):
+    """Load the configured model or a deterministic matcher-only fallback."""
+    import spacy
+
+    try:
+        nlp = spacy.load(model_name, disable=["parser", "lemmatizer", "textcat"])
+        LOGGER.info("Loaded spaCy model %s", model_name)
+    except OSError:
+        nlp = spacy.blank("en")
+        LOGGER.warning(
+            "spaCy model %s unavailable; using matcher-only fallback.", model_name
+        )
+    if "sentencizer" not in nlp.pipe_names:
+        nlp.add_pipe("sentencizer")
+    return nlp
+
+
+def _spacy_signals(
+    document: Document, model_name: str
+) -> tuple[list[str], TextSpan | None, list[str]]:
+    """Use spaCy NER and PhraseMatcher for entities and event language."""
+    from spacy.matcher import PhraseMatcher
+
+    nlp = _load_spacy(model_name)
+    doc = nlp(document.text)
+    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+    matcher.add("COMMERCIAL_EVENT", [nlp.make_doc(phrase) for phrase in _EVENT_PHRASES])
+    matches = matcher(doc)
+    phrases = list(
+        dict.fromkeys(doc[start:end].text.lower() for _, start, end in matches)
+    )
+    source = None
+    if matches:
+        _, start, end = matches[0]
+        source = _sentence_span(
+            document.text, doc[start].idx, doc[end - 1].idx + len(doc[end - 1])
+        )
+    entities = [
+        entity.text for entity in doc.ents if entity.label_ in {"ORG", "PERSON"}
+    ]
+    return phrases, source, entities
 
 
 def _extract_clause_refs(document: Document) -> ExtractedField:
@@ -170,7 +230,11 @@ def _classify(document: Document, clauses: Iterable[str]) -> ExtractedField:
     return ExtractedField(best, confidence, source)
 
 
-def extract(document: Document, low_confidence: float = 0.72) -> ExtractionResult:
+def extract(
+    document: Document,
+    low_confidence: float = 0.72,
+    spacy_model: str = "en_core_web_sm",
+) -> ExtractionResult:
     """Extract auditable canonical facts from a change-order document.
 
     spaCy is intentionally optional at runtime: labeled commercial fields and
@@ -178,6 +242,7 @@ def extract(document: Document, low_confidence: float = 0.72) -> ExtractionResul
     and allows offline operation even when the small language model is absent.
     """
     fields: dict[str, ExtractedField] = {}
+    event_phrases, event_source, named_entities = _spacy_signals(document, spacy_model)
     number_match = re.search(r"\b(?P<value>CO-\d{3})\b", document.text, re.I)
     fields["co_number"] = (
         _field_from_match(
@@ -189,13 +254,16 @@ def extract(document: Document, low_confidence: float = 0.72) -> ExtractionResul
     for name in ("contractor", "originator", "status"):
         match = _search_label(document.text, name)
         value = match.group("value").strip() if match else None
+        if not value and named_entities and name in {"contractor", "originator"}:
+            value = named_entities[0]
         if name == "status" and value:
             value = value.lower()
-        fields[name] = (
-            _field_from_match(document.text, match, value, 0.99)
-            if match
-            else ExtractedField(None, 0.0, None)
-        )
+        if match:
+            fields[name] = _field_from_match(document.text, match, value, 0.99)
+        elif value:
+            fields[name] = ExtractedField(value, 0.62, None)
+        else:
+            fields[name] = ExtractedField(None, 0.0, None)
     slash_dates = re.findall(r"(?m)Date\s*:\s*(\d{1,2})/(\d{1,2})/\d{4}", document.text)
     day_first: bool | None = None
     if any(int(first) > 12 for first, _ in slash_dates):
@@ -216,6 +284,11 @@ def extract(document: Document, low_confidence: float = 0.72) -> ExtractionResul
     fields["schedule_days"] = _extract_schedule(document)
     fields["cited_clause_refs"] = _extract_clause_refs(document)
     fields["type"] = _classify(document, fields["cited_clause_refs"].value)
+    fields["event_phrases"] = ExtractedField(
+        event_phrases,
+        0.86 if event_phrases else 0.55,
+        event_source,
+    )
 
     warnings = list(document.warnings)
     for name, field in fields.items():
@@ -234,7 +307,11 @@ def extract(document: Document, low_confidence: float = 0.72) -> ExtractionResul
 
 
 def extract_many(
-    documents: Iterable[Document], low_confidence: float = 0.72
+    documents: Iterable[Document],
+    low_confidence: float = 0.72,
+    spacy_model: str = "en_core_web_sm",
 ) -> tuple[ExtractionResult, ...]:
     """Extract a deterministic sequence of documents."""
-    return tuple(extract(document, low_confidence) for document in documents)
+    return tuple(
+        extract(document, low_confidence, spacy_model) for document in documents
+    )
