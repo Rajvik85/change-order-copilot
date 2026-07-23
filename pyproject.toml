@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=75.0", "wheel>=0.44"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "change-order-copilot"
+version = "0.1.0"
+description = "Offline-first change order and contract-clause intelligence prototype"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = {text = "MIT"}
+authors = [{name = "Rajesh Natarajan"}]
+dependencies = [
+  "pandas==2.2.3",
+  "plotly==5.24.1",
+  "streamlit==1.45.1",
+  "spacy==3.8.11",
+  "openpyxl==3.1.5",
+  "PyYAML==6.0.2",
+  "python-docx==1.2.0",
+]
+
+[project.optional-dependencies]
+llm = [
+  "anthropic==0.54.0",
+  "openai==1.86.0",
+]
+dev = [
+  "black==24.10.0",
+  "pytest==8.3.4",
+  "pytest-cov==6.1.1",
+  "ruff==0.11.13",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+src = ["src", "app", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/**/*.py" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --cov=src/co_copilot --cov-report=term-missing"
+filterwarnings = ["ignore::DeprecationWarning"]
+markers = ["slow: performance and cold-start checks"]
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+omit = [
+  "src/co_copilot/llm_layer.py",
+]

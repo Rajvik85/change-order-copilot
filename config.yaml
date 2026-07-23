@@ -1,0 +1,50 @@
+project:
+  name: "Synthetic EPC Gas Processing Plant"
+  currency: "USD"
+
+extraction:
+  low_confidence_threshold: 0.72
+  overall_f1_floor: 0.90
+  max_document_characters: 500000
+  spacy_model: "en_core_web_sm"
+
+compliance:
+  notice_period_days: 14
+  particulars_period_days: 28
+  approaching_deadline_days: 3
+  high_value_threshold: 1000000
+  executive_approval_threshold: 5000000
+  concentration_threshold_percent: 40
+
+uploads:
+  max_file_size_mb: 10
+  max_files_per_session: 100
+  allowed_extensions: [".md", ".txt", ".docx", ".csv", ".json", ".yaml", ".yml"]
+  rejected_extensions: [".zip", ".tar", ".gz", ".exe", ".dll", ".sh", ".bat", ".app"]
+
+performance:
+  pipeline_timeout_seconds: 45
+  export_timeout_seconds: 30
+  max_documents: 500
+  dashboard_row_limit: 5000
+
+llm:
+  timeout_seconds: 45
+  max_retries: 2
+  retry_backoff_seconds: 1
+  openai_model: "gpt-4.1-mini"
+  anthropic_model: "claude-3-5-haiku-latest"
+
+ui:
+  chart_height: 360
+  page_title: "Change Order Copilot"
+  categorical_palette:
+    - "#0072B2"
+    - "#E69F00"
+    - "#009E73"
+    - "#CC79A7"
+    - "#56B4E9"
+    - "#D55E00"
+
+logging:
+  level: "INFO"

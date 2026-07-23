@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "project": "Synthetic EPC Gas Processing Plant",
+    "labeling_protocol": "Documents were authored and hand-labeled before extractor implementation.",
+    "development_split": ["CO-001", "CO-002", "CO-003", "CO-004", "CO-005", "CO-006", "CO-007", "CO-008", "CO-009", "CO-010", "CO-011", "CO-012"],
+    "held_out_split": ["CO-013", "CO-014", "CO-015", "CO-016", "CO-017", "CO-018"]
+  },
+  "documents": {
+    "CO-001": {"type": "scope addition", "cost_value": 1250000, "schedule_days": 12, "cited_clause_refs": ["13.2"], "notice_date": "2026-02-10", "event_date": "2026-02-03", "particulars_date": "2026-02-24", "status": "submitted", "contractor": "Gulf Piping Services"},
+    "CO-002": {"type": "design change", "cost_value": 2400000, "schedule_days": 20, "cited_clause_refs": ["13.3"], "notice_date": "2026-02-20", "event_date": "2026-02-15", "particulars_date": "2026-03-10", "status": "approved", "contractor": "Delta Engineering LLC"},
+    "CO-003": {"type": "differing site conditions", "cost_value": 3750000, "schedule_days": 30, "cited_clause_refs": ["4.7"], "notice_date": "2026-03-20", "event_date": "2026-03-01", "particulars_date": "2026-04-05", "status": "disputed", "contractor": "Desert Civil Works"},
+    "CO-004": {"type": "acceleration", "cost_value": 980000, "schedule_days": -18, "cited_clause_refs": ["8.6"], "notice_date": "2026-03-27", "event_date": "2026-03-24", "particulars_date": "2026-04-18", "status": "submitted", "contractor": "Gulf Piping Services"},
+    "CO-005": {"type": "prolongation/EOT", "cost_value": 4200000, "schedule_days": 45, "cited_clause_refs": ["8.4", "13.6"], "notice_date": "2026-04-12", "event_date": "2026-04-05", "particulars_date": "2026-05-02", "status": "submitted", "contractor": "Prime EPC Consortium"},
+    "CO-006": {"type": "force majeure", "cost_value": 1100000, "schedule_days": 14, "cited_clause_refs": ["18.2"], "notice_date": null, "event_date": "2026-05-09", "particulars_date": null, "status": "draft", "contractor": "Oceanic Modules Ltd"},
+    "CO-007": {"type": "deletion/descope", "cost_value": -1600000, "schedule_days": -5, "cited_clause_refs": ["13.4"], "notice_date": "2026-05-19", "event_date": "2026-05-18", "particulars_date": "2026-05-30", "status": "approved", "contractor": "Delta Engineering LLC"},
+    "CO-008": {"type": "disputed backcharge", "cost_value": -450000, "schedule_days": 0, "cited_clause_refs": ["15.4"], "notice_date": "2026-05-25", "event_date": "2026-05-22", "particulars_date": "2026-06-10", "status": "disputed", "contractor": "Desert Civil Works"},
+    "CO-009": {"type": "scope addition", "cost_value": 120000, "schedule_days": 2, "cited_clause_refs": [], "notice_date": "2026-06-13", "event_date": "2026-06-08", "particulars_date": null, "status": "draft", "contractor": "Gulf Piping Services"},
+    "CO-010": {"type": "scope addition", "cost_value": 175000, "schedule_days": 3, "cited_clause_refs": ["13.2"], "notice_date": "2026-06-24", "event_date": "2026-06-19", "particulars_date": "2026-07-15", "status": "submitted", "contractor": "Gulf Piping Services"},
+    "CO-011": {"type": "design change", "cost_value": 210000, "schedule_days": 4, "cited_clause_refs": ["13.3"], "notice_date": "2026-07-07", "event_date": "2026-07-02", "particulars_date": "2026-07-28", "status": "submitted", "contractor": "Gulf Piping Services"},
+    "CO-012": {"type": "design change", "cost_value": 5600000, "schedule_days": 35, "cited_clause_refs": ["13.3"], "notice_date": "2026-06-02", "event_date": "2026-05-01", "particulars_date": "2026-06-15", "status": "disputed", "contractor": "Delta Engineering LLC"},
+    "CO-013": {"type": "differing site conditions", "cost_value": 875000, "schedule_days": 10, "cited_clause_refs": ["4.7"], "notice_date": "2026-08-06", "event_date": "2026-08-01", "particulars_date": "2026-08-25", "status": "submitted", "contractor": "Desert Civil Works"},
+    "CO-014": {"type": "acceleration", "cost_value": 1850000, "schedule_days": -25, "cited_clause_refs": ["8.6"], "notice_date": "2026-08-11", "event_date": "2026-08-05", "particulars_date": "2026-08-29", "status": "approved", "contractor": "Prime EPC Consortium"},
+    "CO-015": {"type": "prolongation/EOT", "cost_value": 6300000, "schedule_days": 60, "cited_clause_refs": ["8.4", "13.6"], "notice_date": "2026-08-24", "event_date": "2026-08-10", "particulars_date": "2026-09-14", "status": "submitted", "contractor": "Prime EPC Consortium"},
+    "CO-016": {"type": "force majeure", "cost_value": 2750000, "schedule_days": 21, "cited_clause_refs": ["18.2"], "notice_date": "2026-10-08", "event_date": "2026-10-01", "particulars_date": "2026-10-27", "status": "submitted", "contractor": "Oceanic Modules Ltd"},
+    "CO-017": {"type": "deletion/descope", "cost_value": -2200000, "schedule_days": -10, "cited_clause_refs": ["13.4"], "notice_date": null, "event_date": "2026-10-14", "particulars_date": "2026-10-28", "status": "approved", "contractor": "Delta Engineering LLC"},
+    "CO-018": {"type": "disputed backcharge", "cost_value": -650000, "schedule_days": 0, "cited_clause_refs": ["15.4"], "notice_date": "2026-11-07", "event_date": "2026-10-22", "particulars_date": "2026-11-18", "status": "disputed", "contractor": "Gulf Piping Services"}
+  }
+}

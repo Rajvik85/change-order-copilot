@@ -1,0 +1,27 @@
+SYNTHETIC PORTFOLIO DOCUMENT - invented for software demonstration only.
+
+CHANGE ORDER CO-004
+
+HEADER
+Date: 2026-04-06
+Originator: Project Director
+Contractor: Gulf Piping Services
+Status: Submitted
+Event Date: 2026-03-24
+Notice Date: 2026-03-27
+Particulars Date: 2026-04-18
+
+EVENT DESCRIPTION
+Implement instructed acceleration by adding a second piping shift and off-site spool fabrication to recover delayed utility tie-ins.
+
+CONTRACTUAL BASIS
+Clause 8.6 Instructed Acceleration.
+
+COST IMPACT
+USD 980,000 comprising shift premium USD 430,000, added supervision USD 180,000, off-site fabrication USD 290,000, and logistics USD 80,000.
+
+SCHEDULE IMPACT
+-18 days (recovery) against the current forecast, supported by Fragnet FR-CO-004.
+
+ATTACHMENTS
+Acceleration instruction AI-004; resource histogram; EST-004; FR-CO-004.

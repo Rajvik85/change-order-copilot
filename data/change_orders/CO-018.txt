@@ -1,0 +1,27 @@
+SYNTHETIC PORTFOLIO DOCUMENT - invented for software demonstration only.
+
+CHANGE ORDER CO-018
+
+HEADER
+Date: November 8, 2026
+Originator: Commercial Manager
+Contractor: Gulf Piping Services
+Status: Disputed
+Event Date: October 22, 2026
+Notice Date: November 7, 2026
+Particulars Date: November 18, 2026
+
+EVENT DESCRIPTION
+Proposed backcharge for replacement of improperly stored stainless-steel fittings after repeated preservation warnings.
+
+CONTRACTUAL BASIS
+Clause 15.4 Corrective Work and Backcharge.
+
+COST IMPACT
+USD -650,000 comprising replacement materials USD 520,000 and inspection and handling USD 130,000.
+
+SCHEDULE IMPACT
+0 days; schedule consequences are reserved.
+
+ATTACHMENTS
+Preservation notices; photographs; supplier invoices.

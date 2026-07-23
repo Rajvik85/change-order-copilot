@@ -1,0 +1,27 @@
+SYNTHETIC PORTFOLIO DOCUMENT - invented for software demonstration only.
+
+CO-014
+
+HEADER
+Date: 08/18/2026
+Originator: Project Director
+Contractor: Prime EPC Consortium
+Status: Approved
+Event Date: 08/05/2026
+Notice Date: 08/11/2026
+Particulars Date: 08/29/2026
+
+EVENT DESCRIPTION
+The client instructed additional commissioning crews and round-the-clock loop checks to recover the utilities-ready milestone.
+
+CONTRACTUAL BASIS
+Sub-Clause 8.6 Instructed Acceleration.
+
+COST IMPACT
+USD 1.85M supported by shift rosters, agreed rates, and commissioning productivity assumptions.
+
+SCHEDULE IMPACT
+-25 days recovery supported by Fragnet FR-CO-014.
+
+ATTACHMENTS
+Instruction AI-014; EST-014; FR-CO-014.

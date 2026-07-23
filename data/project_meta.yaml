@@ -1,0 +1,18 @@
+project_name: "Synthetic EPC Gas Processing Plant"
+project_code: "SGP-250"
+contract_sum: 250000000
+currency: "USD"
+commencement_date: "2026-01-01"
+planned_completion_date: "2028-06-30"
+notice_rules:
+  event_notice_days: 14
+  particulars_days: 28
+  day_basis: "calendar"
+approval_thresholds:
+  project_director: 1000000
+  executive_committee: 5000000
+concentration_threshold_percent: 40
+dataset:
+  development_documents: ["CO-001", "CO-002", "CO-003", "CO-004", "CO-005", "CO-006", "CO-007", "CO-008", "CO-009", "CO-010", "CO-011", "CO-012"]
+  held_out_documents: ["CO-013", "CO-014", "CO-015", "CO-016", "CO-017", "CO-018"]
+disclaimer: "Entirely fictional metadata for portfolio demonstration; no real client, contract, or project content."

@@ -1,0 +1,27 @@
+SYNTHETIC PORTFOLIO DOCUMENT - invented for software demonstration only.
+
+CHANGE ORDER CO-008
+
+HEADER
+Date: 2026/06/04
+Originator: Quality Manager
+Contractor: Desert Civil Works
+Status: Disputed
+Event Date: 2026/05/22
+Notice Date: 2026/05/25
+Particulars Date: 2026/06/10
+
+EVENT DESCRIPTION
+Backcharge for removal and replacement of nonconforming grout beneath two compressor baseplates after the contractor did not complete corrective work by the cure deadline.
+
+CONTRACTUAL BASIS
+Sub-Clause 15.4 Corrective Work and Backcharge.
+
+COST IMPACT
+USD -450,000 proposed deduction: specialist repair USD 310,000 and owner supervision USD 140,000.
+
+SCHEDULE IMPACT
+0 days attributed separately; no extension is claimed.
+
+ATTACHMENTS
+NCR-118; cure notice CN-008; third-party invoices.
